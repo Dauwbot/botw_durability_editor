@@ -24,13 +24,13 @@ namespace BotwExtractor
             BaseConfiguration baseConfiguration = new BaseConfiguration(args);
             baseConfiguration.CheckExe();
 
-            BaseFiles baseFilesList = new BaseFiles(baseConfiguration.DefaultFolder, baseConfiguration);
-            baseFilesList.Decode();
+            FilesToDecode filesToDecode = new FilesToDecode(baseConfiguration.DefaultFolder, baseConfiguration);
+            filesToDecode.Decode();
 
-            DecodedFilesToUnpack decodedFiles = new DecodedFilesToUnpack(baseConfiguration.DefaultFolder + baseFilesList.decodedFolderPath, baseConfiguration);
+            DecodedFilesToUnpack decodedFiles = new DecodedFilesToUnpack(baseConfiguration.DefaultFolder + filesToDecode.decodeFolderPath, baseConfiguration);
             decodedFiles.Unpack();
             
-            UnpackedFilesToConvert unpackedFiles = new UnpackedFilesToConvert(baseConfiguration.DefaultFolder + decodedFiles.unpackedFolderPath, baseConfiguration);
+            UnpackedFilesToConvert unpackedFiles = new UnpackedFilesToConvert(baseConfiguration.DefaultFolder + decodedFiles.unpackFolderPath, baseConfiguration);
             unpackedFiles.Convert();
 
             DateTime executionEndTime = DateTime.Now;

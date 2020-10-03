@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BotwExtractor
 {
-    public class BaseFiles
+    public class FilesToDecode
     {
-        internal string decodedFolderPath = @"_decoded\";
+        internal string decodeFolderPath = @"_decoded\";
         private IEnumerable<string> _filesList;
         private BaseConfiguration _configuration;
         
@@ -25,7 +25,7 @@ namespace BotwExtractor
             set => _configuration = value;
         }
 
-        public BaseFiles(FileInfo directory, BaseConfiguration baseConfiguration)
+        public FilesToDecode(FileInfo directory, BaseConfiguration baseConfiguration)
         {
             FilesList = Directory
                 .EnumerateFiles(directory.DirectoryName, "*" + ".sbactorpack", SearchOption.AllDirectories);
@@ -34,13 +34,13 @@ namespace BotwExtractor
         
         public void Decode()
         {
-            Directory.CreateDirectory(Configuration.DefaultFolder + decodedFolderPath);
+            Directory.CreateDirectory(Configuration.DefaultFolder + decodeFolderPath);
             
             WriteLine("Decoding files");
             Parallel.ForEach(FilesList, (file) =>
             {
                 FileInfo fileInfo = new FileInfo(file);
-                string decodedFilesPath = Configuration.DefaultFolder + decodedFolderPath
+                string decodedFilesPath = Configuration.DefaultFolder + decodeFolderPath
                                                                           + fileInfo.Name.Replace(".sbactor", ".bactor");
                 
                 ProcessStartInfo decodeProcess = new ProcessStartInfo();
@@ -72,7 +72,7 @@ namespace BotwExtractor
             foreach (var file in FilesList)
             {
                 FileInfo fileInfo = new FileInfo(file);
-                string decodedFilesPath = Configuration.DefaultFolder + decodedFolderPath
+                string decodedFilesPath = Configuration.DefaultFolder + decodeFolderPath
                                                                           + fileInfo.Name.Replace(".sbactor", ".bactor");
                        
                 ProcessStartInfo decodeProcess = new ProcessStartInfo();

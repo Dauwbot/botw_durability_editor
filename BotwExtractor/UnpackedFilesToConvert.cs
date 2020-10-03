@@ -10,7 +10,7 @@ namespace BotwExtractor
 {
     public class UnpackedFilesToConvert
     {
-        internal string convertedFolderPath = @"_converted\";
+        private string convertedFolderPath = @"_converted\";
         private FileInfo _unpackedFolder;
         private IEnumerable<string> _foldersList;
         private IEnumerable<string> _filesList;

@@ -9,7 +9,7 @@ namespace BotwExtractor
 {
     public class FilesToDecode
     {
-        internal string decodeFolderPath = @"_decoded\";
+        internal const string DecodeFolderPath = @"_decoded\";
         private IEnumerable<string> _filesList;
         private BaseConfiguration _configuration;
         
@@ -34,13 +34,13 @@ namespace BotwExtractor
         
         public void Decode()
         {
-            Directory.CreateDirectory(Configuration.DefaultFolder + decodeFolderPath);
+            Directory.CreateDirectory(Configuration.DefaultFolder + DecodeFolderPath);
             
             WriteLine("Decoding files");
             Parallel.ForEach(FilesList, (file) =>
             {
                 FileInfo fileInfo = new FileInfo(file);
-                string decodedFilesPath = Configuration.DefaultFolder + decodeFolderPath
+                string decodedFilesPath = Configuration.DefaultFolder + DecodeFolderPath
                                                                           + fileInfo.Name.Replace(".sbactor", ".bactor");
                 
                 ProcessStartInfo decodeProcess = new ProcessStartInfo();
@@ -72,7 +72,7 @@ namespace BotwExtractor
             foreach (var file in FilesList)
             {
                 FileInfo fileInfo = new FileInfo(file);
-                string decodedFilesPath = Configuration.DefaultFolder + decodeFolderPath
+                string decodedFilesPath = Configuration.DefaultFolder + DecodeFolderPath
                                                                           + fileInfo.Name.Replace(".sbactor", ".bactor");
                        
                 ProcessStartInfo decodeProcess = new ProcessStartInfo();

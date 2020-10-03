@@ -10,7 +10,7 @@ namespace BotwExtractor
 {
     public class UnpackedFilesToConvert
     {
-        private string convertedFolderPath = @"_converted\";
+        private const string ConvertedFolderPath = @"_converted\";
         private FileInfo _unpackedFolder;
         private IEnumerable<string> _foldersList;
         private IEnumerable<string> _filesList;
@@ -49,7 +49,7 @@ namespace BotwExtractor
 
         public void Convert()
         {
-            Directory.CreateDirectory(Configuration.DefaultFolder + convertedFolderPath);
+            Directory.CreateDirectory(Configuration.DefaultFolder + ConvertedFolderPath);
             WriteLine("Converting from .bgparamlist to .yml");
             Parallel.ForEach(FoldersList, (folder) =>
             {
@@ -60,7 +60,7 @@ namespace BotwExtractor
                 if (bgparamslistFile != null)
                 {
                     FileInfo file = new FileInfo(bgparamslistFile);
-                    string decodedFilePath = Configuration.DefaultFolder + convertedFolderPath
+                    string decodedFilePath = Configuration.DefaultFolder + ConvertedFolderPath
                                                                              + file.Name.Replace(".bgparamlist",
                                                                                  ".yml");
 

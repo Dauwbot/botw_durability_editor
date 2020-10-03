@@ -9,7 +9,7 @@ namespace BotwExtractor
 {
     public class DecodedFilesToUnpack
     {
-        internal string unpackFolderPath = @"_unpacked\";
+        internal const string UnpackFolderPath = @"_unpacked\";
         private FileInfo _decodedFolder;
         private IEnumerable<string> _filesList;
         private BaseConfiguration _configuration;
@@ -42,13 +42,13 @@ namespace BotwExtractor
 
         public void Unpack()
         {
-            Directory.CreateDirectory(Configuration.DefaultFolder + unpackFolderPath);
+            Directory.CreateDirectory(Configuration.DefaultFolder + UnpackFolderPath);
             
             WriteLine("Unpacking decoded files");
             Parallel.ForEach(FilesList, (file) =>
             {
                 FileInfo fileInfo = new FileInfo(file);
-                string unpackedFilesPath = Configuration.DefaultFolder + unpackFolderPath;
+                string unpackedFilesPath = Configuration.DefaultFolder + UnpackFolderPath;
 
                 ProcessStartInfo unpackProcess = new ProcessStartInfo();
                 unpackProcess.FileName = Configuration.UnpackerExePath;

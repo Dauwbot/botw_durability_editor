@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using static System.Console;
 
 namespace BotwExtractor
@@ -27,10 +23,10 @@ namespace BotwExtractor
             FilesToDecode filesToDecode = new FilesToDecode(baseConfiguration.DefaultFolder, baseConfiguration);
             filesToDecode.Decode();
 
-            DecodedFilesToUnpack decodedFiles = new DecodedFilesToUnpack(baseConfiguration.DefaultFolder + filesToDecode.decodeFolderPath, baseConfiguration);
+            DecodedFilesToUnpack decodedFiles = new DecodedFilesToUnpack(baseConfiguration.DefaultFolder + FilesToDecode.DecodeFolderPath, baseConfiguration);
             decodedFiles.Unpack();
             
-            UnpackedFilesToConvert unpackedFiles = new UnpackedFilesToConvert(baseConfiguration.DefaultFolder + decodedFiles.unpackFolderPath, baseConfiguration);
+            UnpackedFilesToConvert unpackedFiles = new UnpackedFilesToConvert(baseConfiguration.DefaultFolder + DecodedFilesToUnpack.UnpackFolderPath, baseConfiguration);
             unpackedFiles.Convert();
 
             DateTime executionEndTime = DateTime.Now;

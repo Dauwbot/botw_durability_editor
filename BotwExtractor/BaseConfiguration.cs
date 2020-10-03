@@ -5,8 +5,8 @@ namespace BotwExtractor
 {
     public class BaseConfiguration
     {
-        private const string extractorExe = "BotwUnpacker.exe";
-        private const string converterExe = "aampTool.exe";
+        private const string ExtractorExe = "BotwUnpacker.exe";
+        private const string ConverterExe = "aampTool.exe";
         private string[] _args;
         private FileInfo _defaultFolder;
         private bool _exeExists;
@@ -47,8 +47,8 @@ namespace BotwExtractor
         {
             Args = args;
             var folder = Args.GetValue(0).ToString() + @"\";
-            UnpackerExePath = $@"{folder + extractorExe}";
-            ConverterExePath = $@"{folder + converterExe}";
+            UnpackerExePath = $@"{folder + ExtractorExe}";
+            ConverterExePath = $@"{folder + ConverterExe}";
             ExeExists = File.Exists(UnpackerExePath);
             //TODO CREATE ARRAY TO CHECK THE EXISTENCE OF THE EXES
             DefaultFolder = new FileInfo(folder);

@@ -10,35 +10,7 @@ namespace BotwExtractor
 {
     public class UnpackedFilesToConvert
     {
-        private const string ConvertedFolderPath = @"_converted\";
-        private FileInfo _unpackedFolder;
-        private IEnumerable<string> _foldersList;
-        private IEnumerable<string> _filesList;
-        private BaseConfiguration _configuration;
-
-        public FileInfo UnpackedFolder
-        {
-            get => _unpackedFolder;
-            set => _unpackedFolder = value;
-        }
-
-        public IEnumerable<string> FoldersList
-        {
-            get => _foldersList;
-            set => _foldersList = value;
-        }
-
-        public IEnumerable<string> FilesList
-        {
-            get => _filesList;
-            set => _filesList = value;
-        }
-        
-        public BaseConfiguration Configuration
-        {
-            get => _configuration;
-            set => _configuration = value;
-        }
+        internal const string ConvertedFolderPath = @"_converted\";
 
         public UnpackedFilesToConvert(string unpackedFolder, BaseConfiguration baseConfiguration)
         {
@@ -51,22 +23,21 @@ namespace BotwExtractor
         {
             Directory.CreateDirectory(Configuration.DefaultFolder + ConvertedFolderPath);
             WriteLine("Converting from .bgparamlist to .yml");
+            
             Parallel.ForEach(FoldersList, (folder) =>
             {
-                FileInfo dir = new FileInfo(folder);
+                FileInfo folderFileInfo = new FileInfo(folder);
                 var bgparamslistFile =
-                    Directory.EnumerateFiles(dir.FullName, "*" + ".bgparamlist", SearchOption.AllDirectories).FirstOrDefault();
+                    Directory.EnumerateFiles(folderFileInfo.FullName, "*" + ".bgparamlist", SearchOption.AllDirectories).FirstOrDefault();
 
                 if (bgparamslistFile != null)
                 {
                     FileInfo file = new FileInfo(bgparamslistFile);
-                    string decodedFilePath = Configuration.DefaultFolder + ConvertedFolderPath
-                                                                             + file.Name.Replace(".bgparamlist",
-                                                                                 ".yml");
+                    Directory.CreateDirectory(Configuration.DefaultFolder + ConvertedFolderPath + folderFileInfo.Name);
 
                     ProcessStartInfo convertProcess = new ProcessStartInfo();
-                    convertProcess.FileName = "powershell.exe";
-                    convertProcess.Arguments = $"py -m aamp {bgparamslistFile} {decodedFilePath}";
+                    convertProcess.FileName = Configuration.ConverterExePath;
+                    convertProcess.Arguments = $"{bgparamslistFile}";
                     convertProcess.WindowStyle = ProcessWindowStyle.Hidden;
 
                     Process tp = new Process();
@@ -82,10 +53,16 @@ namespace BotwExtractor
                         WriteLine(e);
                         throw;
                     }
+
+                    bgparamslistFile = bgparamslistFile + ".xml";
+                    string decodedFilePath =
+                        Configuration.DefaultFolder + ConvertedFolderPath + folderFileInfo.Name + @"\" +
+                        file.Name + ".xml";
+                    File.Move(bgparamslistFile, decodedFilePath);
                 }
             });
             WriteLine("Conversion done.");
-
+            
             #region ForEach implementation (add 100seconds to execution)
 
             /*foreach (var folder in unpackedFiles.FoldersList)
@@ -124,8 +101,9 @@ namespace BotwExtractor
            }*/
 
             #endregion
-            
-           
         }
+        public FileInfo UnpackedFolder { get; set; }
+        public IEnumerable<string> FoldersList { get; set; }
+        public BaseConfiguration Configuration { get; set; }
     }
 }

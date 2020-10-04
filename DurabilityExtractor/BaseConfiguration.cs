@@ -7,41 +7,6 @@ namespace BotwExtractor
     {
         private const string ExtractorExe = "BotwUnpacker.exe";
         private const string ConverterExe = "aampTool.exe";
-        private string[] _args;
-        private FileInfo _defaultFolder;
-        private bool _exeExists;
-        private string _unpackerExePath;
-        private string _converterExePath;
-        
-        public string[] Args
-        {
-            get => _args;
-            set => _args = value;
-        }
-
-        public FileInfo DefaultFolder
-        {
-            get => _defaultFolder;
-            set => _defaultFolder = value;
-        }
-        
-        public bool ExeExists
-        {
-            get => _exeExists;
-            set => _exeExists = value;
-        }
-
-        public string UnpackerExePath
-        {
-            get => _unpackerExePath;
-            set => _unpackerExePath = value;
-        }
-
-        public string ConverterExePath
-        {
-            get => _converterExePath;
-            set => _converterExePath = value;
-        }
 
         public BaseConfiguration(string[] args)
         {
@@ -70,5 +35,11 @@ namespace BotwExtractor
                 }
             }
         }
+        
+        public string[] Args { get; set; }
+        public FileInfo DefaultFolder { get; set; }
+        public bool ExeExists { get; set; }
+        public string UnpackerExePath { get; set; }
+        public string ConverterExePath { get; set; }
     }
 }

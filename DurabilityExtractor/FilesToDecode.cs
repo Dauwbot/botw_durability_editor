@@ -10,20 +10,6 @@ namespace BotwExtractor
     public class FilesToDecode
     {
         internal const string DecodeFolderPath = @"_decoded\";
-        private IEnumerable<string> _filesList;
-        private BaseConfiguration _configuration;
-        
-        public IEnumerable<string> FilesList
-        {
-            get => _filesList;
-            set => _filesList = value;
-        }
-
-        public BaseConfiguration Configuration
-        {
-            get => _configuration;
-            set => _configuration = value;
-        }
 
         public FilesToDecode(FileInfo directory, BaseConfiguration baseConfiguration)
         {
@@ -97,5 +83,7 @@ namespace BotwExtractor
             } 
         }
         #endregion
+        public IEnumerable<string> FilesList { get; set; }
+        public BaseConfiguration Configuration { get; set; }
     }
 }
